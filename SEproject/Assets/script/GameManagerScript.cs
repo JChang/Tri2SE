@@ -23,7 +23,7 @@ public class GameManagerScript : MonoBehaviour, ICarObserver
     public GameObject gameOverPanel;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverScore;
-    private float score = 0f;
+    public float score = 0f;
     public float scoreIncreaseRate = 1f;
 
     private bool isGameOver = false;
@@ -77,7 +77,7 @@ public class GameManagerScript : MonoBehaviour, ICarObserver
         }
     }
 
-    void SpawnCar()
+    public void SpawnCar()
     {
         Vector3 deerPosition = deer.transform.position;
 
@@ -113,16 +113,17 @@ public class GameManagerScript : MonoBehaviour, ICarObserver
         }
     }
 
-    void ApplyRandomColor(GameObject car)
+    public void ApplyRandomColor(GameObject car)
     {
         Renderer carRenderer = car.GetComponentInChildren<Renderer>();
-
         Color randomColor = new Color(Random.value, Random.value, Random.value);
-        foreach (Material mat in carRenderer.materials)
+
+        foreach (Material mat in carRenderer.sharedMaterials)
         {
             mat.color = randomColor;
         }
     }
+
 
     public void onDeerKilled()
     {

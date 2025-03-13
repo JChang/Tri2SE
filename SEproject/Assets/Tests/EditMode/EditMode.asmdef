@@ -8,6 +8,10 @@
         "Cinemachine.Runtime.Tests",
         "Cinemachine",
         "com.unity.cinemachine.editor",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Editor",
+        "Unity.TextMeshPro.Editor.Tests",
+        "Unity.TextMeshPro.Tests",
         "Scripts"
     ],
     "includePlatforms": [

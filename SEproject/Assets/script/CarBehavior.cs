@@ -177,4 +177,9 @@ public class CarBehavior : MonoBehaviour
             enemy.speed = speed;
         }
     }
+
+    public float getSpeed()
+    {
+        return enemy.speed = gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier);
+    }
 }
