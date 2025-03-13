@@ -5148,6 +5148,7 @@ GameObject:
   - component: {fileID: 8146885002198148195}
   - component: {fileID: 2936623728084326212}
   - component: {fileID: 5337919396244071733}
+  - component: {fileID: 6126730178121010287}
   m_Layer: 0
   m_Name: minivan
   m_TagString: car
@@ -5189,8 +5190,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c790871c24c4e794dac198b036c29056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deerTarget: {fileID: 0}
-  explosion: {fileID: 0}
+  carAI: 1
+  explosion: {fileID: 6847267144782936255, guid: 0fdd18b5ecc28f142aca8eb7583de3f1, type: 3}
+  explosionSound: {fileID: 8300000, guid: 4074d6fb96a4a204191a4ae7ad61023a, type: 3}
+  swerveInterval: 1
+  swerveAmount: 5
+  blockadeDistance: 20
+  reBlockadeDistance: 30
 --- !u!54 &5337919396244071733
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5218,6 +5224,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 96
   m_CollisionDetection: 0
+--- !u!195 &6126730178121010287
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5644824692078820689}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7203958608771381283
 GameObject:
   m_ObjectHideFlags: 0
