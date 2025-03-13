@@ -15,6 +15,11 @@ public class DeerStateMachine : MonoBehaviour
     private Animator animator;
     private GameManagerScript gameManager;
 
+    [Header("Audio")]
+    public AudioClip[] keyPressSounds;
+    public float[] soundWeights;
+    public AudioSource audioSource;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,10 +55,44 @@ public class DeerStateMachine : MonoBehaviour
         deerState.handleGravity();
         deerState.advanceState();
 
+        if (Input.GetKeyDown(KeyCode.R)) { PlayRandomSound(); }
     }
 
     void OnCollisionEnter(Collision c)
     {
         IsGrounded = true;
+    }
+
+    void PlayRandomSound()
+    {
+        if (keyPressSounds.Length > 0 && soundWeights.Length == keyPressSounds.Length)
+        {
+            int selectedIndex = GetWeightedRandomIndex(soundWeights);
+            audioSource.clip = keyPressSounds[selectedIndex];
+            audioSource.Play();
+        }
+    }
+
+    int GetWeightedRandomIndex(float[] weights)
+    {
+        float totalWeight = 0f;
+        foreach (float weight in weights)
+        {
+            totalWeight += weight;
+        }
+
+        float randomValue = Random.Range(0, totalWeight);
+        float cumulativeWeight = 0f;
+
+        for (int i = 0; i < weights.Length; i++)
+        {
+            cumulativeWeight += weights[i];
+            if (randomValue < cumulativeWeight)
+            {
+                return i;
+            }
+        }
+
+        return 0;
     }
 }
