@@ -73,7 +73,7 @@ public class CarSpawningTests
         GameManagerScript gameManager = new GameObject().AddComponent<GameManagerScript>();
         gameManager.baseSpeed = 5f;
         gameManager.speedMultiplier = 0.1f;
-        gameManager.addPoints(50f);
+        gameManager.AddPoints(50f);
 
         CarBehavior carBehavior = carObject.GetComponent<CarBehavior>();
         float expectedSpeed = gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier);
