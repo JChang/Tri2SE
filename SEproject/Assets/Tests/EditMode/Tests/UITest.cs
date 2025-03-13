@@ -1,8 +1,8 @@
-using System.Collections;
-using NUnit.Framework;
 using TMPro;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
+using NUnit.Framework;
 
 public class UITest
 {
@@ -39,22 +39,22 @@ public class UITest
     [TearDown]
     public void TearDown()
     {
-        Object.Destroy(gameManager.gameObject);
-        Object.Destroy(musicManager.gameObject);
-        Object.Destroy(mockCamera.gameObject);
-        Object.Destroy(mockScoreText.gameObject);
-        Object.Destroy(canvasObject);
-        Object.Destroy(eventSystemObject);
+        Object.DestroyImmediate(gameManager.gameObject);
+        Object.DestroyImmediate(musicManager.gameObject);
+        Object.DestroyImmediate(mockCamera.gameObject);
+        Object.DestroyImmediate(mockScoreText.gameObject);
+        Object.DestroyImmediate(canvasObject);
+        Object.DestroyImmediate(eventSystemObject);
     }
 
     [Test]
-    public void TestCameraExists()
+    public void CameraExists()
     {
         Assert.IsNotNull(gameManager.GetCameraTransform(), "Camera transform should be assigned in GameManager");
     }
 
     [UnityTest]
-    public IEnumerator TestMusicPlaysOnStart()
+    public IEnumerator MusicPlaysOnStart()
     {
         musicManager.Start();
         yield return null; 
@@ -63,7 +63,7 @@ public class UITest
     }
 
     [UnityTest]
-    public IEnumerator TestMusicStopsOnGameOver()
+    public IEnumerator MusicStopsOnGameOver()
     {
         musicManager.StopTitleMusic();
         yield return null;
@@ -72,7 +72,7 @@ public class UITest
     }
 
     [UnityTest]
-    public IEnumerator TestScoreUpdatesCorrectly()
+    public IEnumerator ScoreUpdatesCorrectly()
     {
         gameManager.AddPoints(10);
         yield return null; 
