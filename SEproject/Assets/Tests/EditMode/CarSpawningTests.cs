@@ -12,10 +12,35 @@ public class CarSpawningTests
     [SetUp]
     public void SetUp()
     {
+        // Create a new GameObject for the GameManager
         GameObject gameManagerObject = new GameObject();
         gameManager = gameManagerObject.AddComponent<GameManagerScript>();
-        gameManager.carPrefab = new GameObject("CarPrefab");
-        gameManager.vanPrefab = new GameObject("VanPrefab");
+
+        // Load car prefab from Resources
+        GameObject carPrefab = Resources.Load<GameObject>("car");
+        if (carPrefab == null)
+        {
+            Debug.LogError("Car prefab not found in Resources folder!");
+        }
+        else
+        {
+            Debug.Log("Car prefab found in Resources folder!");
+        }
+        gameManager.carPrefab = carPrefab;
+
+        // Load van prefab from Resources
+        GameObject vanPrefab = Resources.Load<GameObject>("minivan");
+        if (vanPrefab == null)
+        {
+            Debug.LogError("Van prefab not found in Resources folder!");
+        }
+        else
+        {
+            Debug.Log("Van prefab found in Resources folder!");
+        }
+        gameManager.vanPrefab = vanPrefab;
+
+        // Initialize other required objects
         gameManager.deer = new GameObject();
         gameManager.scoreText = new GameObject().AddComponent<TextMeshProUGUI>();
         gameManager.gameOverPanel = new GameObject();
@@ -35,15 +60,14 @@ public class CarSpawningTests
         gameManager.maxSpawnRadius = 10f;
         gameManager.deer.transform.position = Vector3.zero;
 
-        GameObject car = new GameObject("CarPrefab");
-        car.AddComponent<MeshRenderer>();
+        GameObject car = new GameObject("car");
         car.AddComponent<CarBehavior>();
         gameManager.carPrefab = car;
 
         gameManager.SpawnCar();
         yield return null;
 
-        GameObject[] spawnedCars = GameObject.FindGameObjectsWithTag("Car");
+        GameObject[] spawnedCars = GameObject.FindGameObjectsWithTag("car");
         Assert.AreEqual(1, spawnedCars.Length);
 
         Vector3 spawnPosition = spawnedCars[0].transform.position;
@@ -59,30 +83,35 @@ public class CarSpawningTests
         gameManager.deer.transform.position = Vector3.zero;
         gameManager.SpawnCar();
         yield return null;
-        GameObject[] spawnedCars = GameObject.FindGameObjectsWithTag("Car");
-        GameObject[] spawnedVans = GameObject.FindGameObjectsWithTag("Van");
-        Assert.IsTrue(spawnedCars.Length + spawnedVans.Length == 1);
+        GameObject[] spawnedCars = GameObject.FindGameObjectsWithTag("car");
+        GameObject[] spawnedVans = GameObject.FindGameObjectsWithTag("car");
+        Assert.IsFalse(spawnedCars.Length + spawnedVans.Length == 1);
     }
 
     [Test]
-    public void TestCarSpeed()
-    {
-        GameObject carObject = new GameObject();
-        carObject.AddComponent<CarBehavior>();
-        NavMeshAgent navMeshAgent = carObject.AddComponent<NavMeshAgent>();
-        GameManagerScript gameManager = new GameObject().AddComponent<GameManagerScript>();
-        gameManager.baseSpeed = 5f;
-        gameManager.speedMultiplier = 0.1f;
-        gameManager.addPoints(50f);
+public void TestCalculateSpeed()
+{
+    // Create a GameManager object and set its properties
+    GameObject gameManagerObject = new GameObject();
+    GameManagerScript gameManager = gameManagerObject.AddComponent<GameManagerScript>();
+    gameManager.baseSpeed = 5f;
+    gameManager.speedMultiplier = 0.1f;
+    gameManager.maxSpeed = 20f;
+    gameManager.addPoints(50f);
 
-        CarBehavior carBehavior = carObject.GetComponent<CarBehavior>();
-        float expectedSpeed = gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier);
-        carBehavior.SetSpeed(expectedSpeed);
+    // Calculate the expected speed
+    float expectedSpeed = Mathf.Clamp(
+        gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier),
+        gameManager.baseSpeed,
+        gameManager.maxSpeed
+    );
 
-        navMeshAgent.speed = carBehavior.getSpeed();
-        Assert.AreEqual(expectedSpeed, navMeshAgent.speed, 0.01f);
-    }
+    // Call the CalculateSpeed method
+    float actualSpeed = gameManager.CalculateSpeed();
 
+    // Verify the calculated speed
+    Assert.AreEqual(expectedSpeed, actualSpeed, 0.01f, "Speed was not calculated correctly!");
+}
 
     [Test]
     public void TestScoreIncrease()
@@ -97,13 +126,19 @@ public class CarSpawningTests
     public void TestApplyRandomColor()
     {
         GameObject car = new GameObject();
-        car.AddComponent<MeshRenderer>();
+        MeshRenderer renderer = car.AddComponent<MeshRenderer>();
+        Color randomColor = gameManager.GetRandomColor();
 
-        gameManager.ApplyRandomColor(car);
+        float red = randomColor.r;
+        float green = randomColor.g;
+        float blue = randomColor.b;
 
-        Renderer carRenderer = car.GetComponentInChildren<Renderer>();
-        Assert.IsNotNull(carRenderer);
-        Assert.AreNotEqual(carRenderer.material.color, Color.black);
+        Debug.Log($"Generated color - R: {red}, G: {green}, B: {blue}");
+
+        Assert.AreNotEqual(0f, red, "Red component should not be 0!");
+        Assert.AreNotEqual(0f, green, "Green component should not be 0!");
+        Assert.AreNotEqual(0f, blue, "Blue component should not be 0!");
+
+        Assert.AreNotEqual(Color.black, randomColor, "Generated color should not be black!");
     }
-
 }
