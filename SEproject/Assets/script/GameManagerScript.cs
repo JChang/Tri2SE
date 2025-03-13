@@ -104,7 +104,7 @@ public class GameManagerScript : MonoBehaviour, IGameManager
 
         ApplyRandomColor(spawnedCar);
 
-        float speedLevel = Mathf.Clamp(baseSpeed + (score * speedMultiplier), baseSpeed, maxSpeed);
+        float speedLevel = CalculateSpeed();
         CarBehavior carBehavior = spawnedCar.GetComponent<CarBehavior>();
         if (carBehavior != null)
         {
@@ -112,15 +112,31 @@ public class GameManagerScript : MonoBehaviour, IGameManager
         }
     }
 
+    public float CalculateSpeed()
+    {
+        float speed = baseSpeed + (score * speedMultiplier);
+
+        return Mathf.Clamp(speed, baseSpeed, maxSpeed);
+    }
+
     public void ApplyRandomColor(GameObject car)
     {
         Renderer carRenderer = car.GetComponentInChildren<Renderer>();
-        Color randomColor = new Color(Random.value, Random.value, Random.value);
+        Color randomColor = GetRandomColor();
 
         foreach (Material mat in carRenderer.sharedMaterials)
         {
             mat.color = randomColor;
         }
+    }
+
+    public Color GetRandomColor()
+    {
+        float red = Random.value;
+        float green = Random.value;
+        float blue = Random.value;
+
+        return new Color(red, green, blue);
     }
 
 

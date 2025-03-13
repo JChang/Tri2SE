@@ -180,6 +180,11 @@ public class CarBehavior : MonoBehaviour
 
     public float getSpeed()
     {
-        return enemy.speed = gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier);
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager reference is missing in CarBehavior!");
+            return 0f;
+        }
+        return gameManager.CalculateSpeed();
     }
 }
