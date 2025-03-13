@@ -12,11 +12,9 @@ public class CarSpawningTests
     [SetUp]
     public void SetUp()
     {
-        // Create a new GameObject for the GameManager
         GameObject gameManagerObject = new GameObject();
         gameManager = gameManagerObject.AddComponent<GameManagerScript>();
 
-        // Load car prefab from Resources
         GameObject carPrefab = Resources.Load<GameObject>("car");
         if (carPrefab == null)
         {
@@ -28,7 +26,6 @@ public class CarSpawningTests
         }
         gameManager.carPrefab = carPrefab;
 
-        // Load van prefab from Resources
         GameObject vanPrefab = Resources.Load<GameObject>("minivan");
         if (vanPrefab == null)
         {
@@ -40,7 +37,6 @@ public class CarSpawningTests
         }
         gameManager.vanPrefab = vanPrefab;
 
-        // Initialize other required objects
         gameManager.deer = new GameObject();
         gameManager.scoreText = new GameObject().AddComponent<TextMeshProUGUI>();
         gameManager.gameOverPanel = new GameObject();
@@ -91,7 +87,6 @@ public class CarSpawningTests
     [Test]
 public void TestCalculateSpeed()
 {
-    // Create a GameManager object and set its properties
     GameObject gameManagerObject = new GameObject();
     GameManagerScript gameManager = gameManagerObject.AddComponent<GameManagerScript>();
     gameManager.baseSpeed = 5f;
@@ -99,17 +94,14 @@ public void TestCalculateSpeed()
     gameManager.maxSpeed = 20f;
     gameManager.addPoints(50f);
 
-    // Calculate the expected speed
     float expectedSpeed = Mathf.Clamp(
         gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier),
         gameManager.baseSpeed,
         gameManager.maxSpeed
     );
 
-    // Call the CalculateSpeed method
     float actualSpeed = gameManager.CalculateSpeed();
 
-    // Verify the calculated speed
     Assert.AreEqual(expectedSpeed, actualSpeed, 0.01f, "Speed was not calculated correctly!");
 }
 
