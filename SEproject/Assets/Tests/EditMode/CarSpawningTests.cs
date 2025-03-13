@@ -92,7 +92,7 @@ public class CarSpawningTests
         gameManager.baseSpeed = 5f;
         gameManager.speedMultiplier = 0.1f;
         gameManager.maxSpeed = 20f;
-        gameManager.addPoints(50f);
+        gameManager.AddPoints(50f);
 
         float expectedSpeed = Mathf.Clamp(
             gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier),
