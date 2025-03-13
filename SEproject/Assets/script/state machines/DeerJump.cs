@@ -75,7 +75,6 @@ public class DeerJump : IDeerState
         }
         else
         {
-            Debug.Log("Not on the ground");
             Debug.DrawRay(deer.transform.position, Vector3.down * 1.2f, Color.red);
             animator.SetBool("airborne", true);
         }

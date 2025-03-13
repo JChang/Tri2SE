@@ -96,7 +96,6 @@ public class DeerWalk : IDeerState
 
     private Vector3 GetCameraForwardDirection()
     {
-        Debug.Log(deer);
         CinemachineFreeLook freeLookCamera = deer
             .GameManager
             .GetCameraTransform()
