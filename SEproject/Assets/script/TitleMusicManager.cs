@@ -6,7 +6,7 @@ public class TitleMusicManager : MonoBehaviour
     private AudioSource audioSource;
     public float volume = 1f;
 
-    void Start()
+    public void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
 
