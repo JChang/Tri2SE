@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeerStateMachine : MonoBehaviour
 {
-    private IDeerState deerState;
+    public IDeerState deerState;
 
     public Rigidbody rb;
 
@@ -12,7 +12,7 @@ public class DeerStateMachine : MonoBehaviour
 
     public bool IsGrounded { get; set; } = true;
 
-    private Animator animator;
+    public Animator animator;
     public IGameManager GameManager { get; set; }
 
     [Header("Audio")]
@@ -31,6 +31,9 @@ public class DeerStateMachine : MonoBehaviour
     public void setState(IDeerState d)
     {
         deerState = d;
+    }
+    public IDeerState GetCurrentState(){
+        return deerState;
     }
 
     void Update()
