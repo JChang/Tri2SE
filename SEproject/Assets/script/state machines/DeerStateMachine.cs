@@ -13,7 +13,7 @@ public class DeerStateMachine : MonoBehaviour
     public bool IsGrounded { get; set; } = true;
 
     private Animator animator;
-    private GameManagerScript gameManager;
+    public IGameManager GameManager { get; set; }
 
     [Header("Audio")]
     public AudioClip[] keyPressSounds;
@@ -26,7 +26,7 @@ public class DeerStateMachine : MonoBehaviour
         t = GetComponent<Transform>();
         deerState = new DeerWalk(this);
         animator = transform.Find("Deer_001").GetComponent<Animator>();
-        gameManager = new GameManagerScript();
+        // GameManager = new GameManagerScript();
     }
     public void setState(IDeerState d)
     {

@@ -94,7 +94,7 @@ public class DeerSprint : IDeerState
 
     private Vector3 GetCameraForwardDirection()
     {
-        CinemachineFreeLook freeLookCamera = GameManagerScript.Instance.cameraTransform.GetComponent<CinemachineFreeLook>();
+        CinemachineFreeLook freeLookCamera = deer.GameManager.GetCameraTransform().GetComponent<CinemachineFreeLook>();
 
         Vector3 lookAtPosition = freeLookCamera.LookAt.position;
         Vector3 cameraPosition = freeLookCamera.transform.position;
@@ -104,7 +104,7 @@ public class DeerSprint : IDeerState
 
     private Vector3 GetCameraRightDirection()
     {
-        CinemachineFreeLook freeLookCamera = GameManagerScript.Instance.cameraTransform.GetComponent<CinemachineFreeLook>();
+        CinemachineFreeLook freeLookCamera = deer.GameManager.GetCameraTransform().GetComponent<CinemachineFreeLook>();
 
         Vector3 cameraForward = GetCameraForwardDirection();
         Vector3 cameraRight = Vector3.Cross(cameraForward, Vector3.up);
