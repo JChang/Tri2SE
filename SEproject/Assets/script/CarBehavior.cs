@@ -156,6 +156,7 @@ public class CarBehavior : MonoBehaviour
             enemy.isStopped = true;
             enemy.velocity = Vector3.zero;
 
+            audioSource.volume = 0.75f;
             audioSource.PlayOneShot(explosionSound);
             Instantiate(explosion, transform.position, Quaternion.identity);
 
