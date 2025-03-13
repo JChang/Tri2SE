@@ -39,12 +39,12 @@ public class UITest
     [TearDown]
     public void TearDown()
     {
-        Object.Destroy(gameManager.gameObject);
-        Object.Destroy(musicManager.gameObject);
-        Object.Destroy(mockCamera.gameObject);
-        Object.Destroy(mockScoreText.gameObject);
-        Object.Destroy(canvasObject);
-        Object.Destroy(eventSystemObject);
+        Object.DestroyImmediate(gameManager.gameObject);
+        Object.DestroyImmediate(musicManager.gameObject);
+        Object.DestroyImmediate(mockCamera.gameObject);
+        Object.DestroyImmediate(mockScoreText.gameObject);
+        Object.DestroyImmediate(canvasObject);
+        Object.DestroyImmediate(eventSystemObject);
     }
 
     [Test]
