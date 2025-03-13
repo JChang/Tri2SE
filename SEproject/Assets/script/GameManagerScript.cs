@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameManagerScript : MonoBehaviour, ICarObserver
+public class GameManagerScript : MonoBehaviour, IGameManager
 {
-    public static GameManagerScript Instance { get; private set; }
     public Transform cameraTransform;
 
     [Header("Prefabs")]
@@ -37,10 +36,9 @@ public class GameManagerScript : MonoBehaviour, ICarObserver
     public AudioSource audioSource;
     public AudioClip[] laughSounds;
 
-    private void Awake()
+    public Transform GetCameraTransform()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        return cameraTransform;
     }
 
     void Start()
@@ -50,6 +48,7 @@ public class GameManagerScript : MonoBehaviour, ICarObserver
         if (deer != null)
         {
             deer.RegisterObserver(this);
+            deer.GetComponent<DeerStateMachine>().GameManager = this;
         }
         gameOverPanel.SetActive(false);
     }
@@ -63,12 +62,12 @@ public class GameManagerScript : MonoBehaviour, ICarObserver
         }
     }
 
-    public void addPoints(float points)
+    public void AddPoints(float points)
     {
         score += points;
     }
 
-    IEnumerator SpawnCarsAtInterval()
+    public IEnumerator SpawnCarsAtInterval()
     {
         while (true)
         {

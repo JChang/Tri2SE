@@ -16,11 +16,13 @@ public class DeerJump : IDeerState
 
     public DeerJump(DeerStateMachine deer, float speed)
     {
+        if (deer == null) throw new System.ArgumentNullException(nameof(deer), "DeerStateMachine cannot be null in DeerJump state.");
         this.deer = deer;
         rb = deer.rb;
         this.speed = speed;
         raycastCooldown = 60;
         animator = deer.transform.Find("Deer_001").GetComponent<Animator>();
+        deer.IsGrounded = false;
     }
 
     public void handleGravity()
@@ -68,6 +70,10 @@ public class DeerJump : IDeerState
         RaycastHit hit;
         if (Physics.Raycast(deer.transform.position, Vector3.down, out hit, 1.2f, groundLayer) && raycastCooldown <= 0)
         {
+            deer.IsGrounded = true;
+
+        }
+        if (deer.IsGrounded){
             if (speed == 2f) deer.setState(new DeerWalk(deer));
             if (speed == 4f) deer.setState(new DeerSprint(deer));
             Debug.DrawRay(deer.transform.position, Vector3.down * 1.2f, Color.yellow);
@@ -75,9 +81,9 @@ public class DeerJump : IDeerState
         }
         else
         {
-            Debug.Log("Not on the ground");
             Debug.DrawRay(deer.transform.position, Vector3.down * 1.2f, Color.red);
             animator.SetBool("airborne", true);
+            deer.IsGrounded = false;
         }
         raycastCooldown--;
     }

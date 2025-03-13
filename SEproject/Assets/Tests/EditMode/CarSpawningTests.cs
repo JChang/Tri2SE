@@ -85,25 +85,25 @@ public class CarSpawningTests
     }
 
     [Test]
-public void TestCalculateSpeed()
-{
-    GameObject gameManagerObject = new GameObject();
-    GameManagerScript gameManager = gameManagerObject.AddComponent<GameManagerScript>();
-    gameManager.baseSpeed = 5f;
-    gameManager.speedMultiplier = 0.1f;
-    gameManager.maxSpeed = 20f;
-    gameManager.addPoints(50f);
+    public void TestCalculateSpeed()
+    {
+        GameObject gameManagerObject = new GameObject();
+        GameManagerScript gameManager = gameManagerObject.AddComponent<GameManagerScript>();
+        gameManager.baseSpeed = 5f;
+        gameManager.speedMultiplier = 0.1f;
+        gameManager.maxSpeed = 20f;
+        gameManager.addPoints(50f);
 
-    float expectedSpeed = Mathf.Clamp(
-        gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier),
-        gameManager.baseSpeed,
-        gameManager.maxSpeed
-    );
+        float expectedSpeed = Mathf.Clamp(
+            gameManager.baseSpeed + (gameManager.score * gameManager.speedMultiplier),
+            gameManager.baseSpeed,
+            gameManager.maxSpeed
+        );
 
-    float actualSpeed = gameManager.CalculateSpeed();
+        float actualSpeed = gameManager.CalculateSpeed();
 
-    Assert.AreEqual(expectedSpeed, actualSpeed, 0.01f, "Speed was not calculated correctly!");
-}
+        Assert.AreEqual(expectedSpeed, actualSpeed, 0.01f, "Speed was not calculated correctly!");
+    }
 
     [Test]
     public void TestScoreIncrease()
